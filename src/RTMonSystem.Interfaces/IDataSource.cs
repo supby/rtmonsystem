@@ -8,6 +8,6 @@ namespace RTMonSystem.Interfaces
 {
     public interface IDataSource
     {
-        Task<string> GetDataAsync(Dictionary<string,string> p);
+        Task<string> GetDataAsync();
     }
 }

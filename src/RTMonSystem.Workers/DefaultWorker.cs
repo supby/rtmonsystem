@@ -9,31 +9,31 @@ using System.Threading.Tasks;
 
 namespace RTMonSystem.Workers
 {
-    class YahooFinWorker : IDataSourceWorker
+    public class DefaultWorker : IDataSourceWorker
     {
         private readonly IDataSource _ds;
+        private readonly int _delay = 0;
 
-        public YahooFinWorker(IDataSource ds)
+        public DefaultWorker(IDataSource ds, int delay=0)
         {
             _ds = ds;
+            _delay = delay;
         }
 
-        public IObservable<string> Subscribe(CancellationToken ct)
+        public IObservable<string> Run(CancellationToken ct)
         {
             Func<IObserver<string>, Task> s = async obs =>
-                            //Task.Factory.StartNew(() =>
                             {
                                 while (true)
                                 {
-                                    string data = await _ds.GetDataAsync(new Dictionary<string, string>() {
-                                        {"symbols", "GOOG"}
-                                    });
-                                    if (string.IsNullOrEmpty(data))
+                                    string data = await _ds.GetDataAsync();
+                                    if (!string.IsNullOrEmpty(data))
                                         obs.OnNext(data);
                                     ct.ThrowIfCancellationRequested();
+                                    if(_delay > 0)
+                                        await Task.Delay(_delay);
                                 }
                             };
-                            //}, ct);
 
             return Observable.Create<string>(s);
         }
