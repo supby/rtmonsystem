@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RTMonSystem.DataSources
+namespace RTMonSystem.DataSources.REST.Yahoo
 {
     public sealed class YahooFinDataSource : RESTDataSource
     {

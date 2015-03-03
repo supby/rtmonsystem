@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RTMonSystem.DataSources
+namespace RTMonSystem.DataSources.REST
 {
     public class RESTDataSource : IDataSource
     {

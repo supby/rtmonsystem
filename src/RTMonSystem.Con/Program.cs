@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using RTMonSystem.DataSources;
+using RTMonSystem.DataSources.REST.Yahoo;
 using RTMonSystem.Workers;
 using System;
 using System.Collections.Generic;
