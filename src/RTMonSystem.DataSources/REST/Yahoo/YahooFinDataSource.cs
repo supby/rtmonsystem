@@ -19,7 +19,9 @@ namespace RTMonSystem.DataSources.REST.Yahoo
 
         public override async Task<string> GetDataAsync()
         {
-            string url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22YHOO%22%2C%22AAPL%22%2C%22GOOG%22%2C%22MSFT%22)%0A%09%09&format=json&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env&callback=";
+            string url = string.Format("https://query.yahooapis.com/v1/public/yql?q={0}&format=json&diagnostics=false&env=http%3A%2F%2Fdatatables.org%2Falltables.env",
+                                        Uri.EscapeDataString(string.Format("select * from yahoo.finance.quotes where symbol in (\"{0}\")",
+                                                _symbols.Aggregate((s1,s2) => string.Format("{0}\",\"{1}", s1, s2)))));
             return await GetDataAsync(url);
         }
     }
