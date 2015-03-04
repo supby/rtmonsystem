@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTMonSystem.Workers", "RTMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTMonSystem.Con", "RTMonSystem.Con\RTMonSystem.Con.csproj", "{AF9CDE92-FEB7-47EA-9F58-1C5379867F0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTMonSystem.Web.Client", "RTMonSystem.Web.Client\RTMonSystem.Web.Client.csproj", "{8FE5B122-8BFE-46D1-AE64-3A4DFC4B5E38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{AF9CDE92-FEB7-47EA-9F58-1C5379867F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF9CDE92-FEB7-47EA-9F58-1C5379867F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF9CDE92-FEB7-47EA-9F58-1C5379867F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE5B122-8BFE-46D1-AE64-3A4DFC4B5E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE5B122-8BFE-46D1-AE64-3A4DFC4B5E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE5B122-8BFE-46D1-AE64-3A4DFC4B5E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE5B122-8BFE-46D1-AE64-3A4DFC4B5E38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
