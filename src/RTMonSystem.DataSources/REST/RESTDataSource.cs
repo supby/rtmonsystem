@@ -29,7 +29,7 @@ namespace RTMonSystem.DataSources.REST
             return await GetDataAsync(_url);
         }
 
-        protected async virtual Task<string> GetDataAsync(string url)
+        protected async Task<string> GetDataAsync(string url)
         {
             WebRequest request = WebRequest.Create(url);
             string resp = null;
