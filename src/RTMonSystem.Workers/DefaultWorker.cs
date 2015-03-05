@@ -31,7 +31,7 @@ namespace RTMonSystem.Workers
                                         obs.OnNext(data);
                                     ct.ThrowIfCancellationRequested();
                                     if(_delay > 0)
-                                        await Task.Delay(_delay);
+                                        await Task.Delay(_delay, ct);
                                 }
                             };
 
