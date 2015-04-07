@@ -11,10 +11,13 @@ namespace RTMonSystem.DataSources.REST
 {
     public class RESTDataSource : IDataSource
     {
-        private readonly string _url;
-        public RESTDataSource(string url)
+        private readonly Uri _uri;
+        public RESTDataSource(string url) : this(new Uri(url))
+        { }
+
+        public RESTDataSource(Uri uri)
         {
-            _url = url;
+            _uri = uri;
         }
 
         protected RESTDataSource()
@@ -26,12 +29,12 @@ namespace RTMonSystem.DataSources.REST
             //                            Uri.EscapeDataString(
             //                                    string.Format("select * from yahoo.finance.quotes where symbol in ({0})",
             //                                                p["symbols"])));
-            return await GetDataAsync(_url);
+            return await GetDataAsync(_uri);
         }
 
-        protected async Task<string> GetDataAsync(string url)
+        protected async Task<string> GetDataAsync(Uri uri)
         {
-            WebRequest request = WebRequest.Create(url);
+            WebRequest request = WebRequest.Create(uri);
             string resp = null;
             using (var response = await request.GetResponseAsync())
             {
