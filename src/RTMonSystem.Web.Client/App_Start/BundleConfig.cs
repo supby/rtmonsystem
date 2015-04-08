@@ -26,13 +26,24 @@ namespace RTMonSystem.Web.Client
                       "~/Scripts/lib/bootstrap.js",
                       "~/Scripts/lib/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/backbone").Include(
+                      "~/Scripts/lib/backbone-min.js",
+                      "~/Scripts/lib/backbone.localStorage-min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/underscore").Include(
+                      "~/Scripts/lib/underscore-min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                        "~/Scripts/app.js",
+                        "~/Scripts/widget.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = false;
         }
     }
 }
