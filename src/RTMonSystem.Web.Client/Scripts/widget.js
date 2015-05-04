@@ -27,8 +27,15 @@ var WidgetView = Backbone.View.extend({
     template: _.template($('#widget-template').html()),
 
     initialize: function () {
-        
+        var widgetHub = $.connection.widgetHub;
+        widgetHub.client.updateWidgetsData = $.proxy(this.updateWidgetData, this);
+        $.connection.hub.start();
     },
+
+    updateWidgetData: function(msg){
+        console.log("update");
+    },
+
     render: function () {
         this.$el.html(this.template(this.model.toJSON()));
         return this;

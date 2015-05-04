@@ -11,8 +11,8 @@ namespace RTMonSystem.Web.Client
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/lib/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/lib/jquery-ui-1.11.4.min.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+            //            "~/Scripts/lib/jquery-ui-1.11.4.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/lib/jquery.validate*"));
@@ -32,6 +32,9 @@ namespace RTMonSystem.Web.Client
 
             bundles.Add(new ScriptBundle("~/bundles/underscore").Include(
                       "~/Scripts/lib/underscore-min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
+                        "~/Scripts/lib/jquery.signalR-2.2.0.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                         "~/Scripts/app.js",

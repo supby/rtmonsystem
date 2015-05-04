@@ -68,6 +68,18 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -135,7 +147,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\YahooFinHub.cs" />
+    <Compile Include="Hubs\WidgetHub.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -228,6 +240,20 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RTMonSystem.DataSources\RTMonSystem.DataSources.csproj">
+      <Project>{fa302e4d-c90f-4b0e-a07c-56035aac700d}</Project>
+      <Name>RTMonSystem.DataSources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RTMonSystem.Interfaces\RTMonSystem.Interfaces.csproj">
+      <Project>{e2e7929b-c168-447b-b677-a37f4efe6ab9}</Project>
+      <Name>RTMonSystem.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RTMonSystem.Workers\RTMonSystem.Workers.csproj">
+      <Project>{c84f4d65-41d1-4f41-be7a-fca852e6be58}</Project>
+      <Name>RTMonSystem.Workers</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
