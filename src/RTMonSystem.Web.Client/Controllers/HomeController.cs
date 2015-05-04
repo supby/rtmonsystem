@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RTMonSystem.Web.Client.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,18 +14,18 @@ namespace RTMonSystem.Web.Client.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public JsonResult Widgets()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            var m = new HomeModel();
+            m.WidgetList = new List<Widget>() 
+            {
+                new Widget("Widget 1", "Type 1", "Widget 1 Tiltle", "Widget 1 Description"),
+                new Widget("Widget 2", "Type 1", "Widget 2 Tiltle", "Widget 2 Description"),
+                new Widget("Widget 3", "Type 2", "Widget 3 Tiltle", "Widget 3 Description")
+            };
+            return Json(m, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
     }
 }

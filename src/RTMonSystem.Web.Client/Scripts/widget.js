@@ -1,19 +1,28 @@
 ﻿var Widget = Backbone.Model.extend({
     defaults: function () {
         return {
-            title: "Empty Widget"
+            Title: "",
+            Id: "",
+            Name: "",
+            Description: "",
+            Type: ""
         };
     }
 });
 
 var WidgetList = Backbone.Collection.extend({    
     model: Widget,
-    localStorage: new Backbone.LocalStorage("todos-backbone")
+    url: '/Home/Widgets',
+    //localStorage: new Backbone.LocalStorage("rtmonsys-backbone"),
+
+    parse: function (response) {
+        return response.WidgetList;
+    }
 });
 
 var Widgets = new WidgetList;
 
-var WidgetView = Backbone.View.extend({    
+var WidgetView = Backbone.View.extend({
     tagName: "div",
     template: _.template($('#widget-template').html()),
 

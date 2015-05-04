@@ -8,24 +8,22 @@
             this.listenTo(Widgets, 'reset', this.addAll);
             this.listenTo(Widgets, 'all', this.render);
 
-            //test
-            Widgets.create({ title: "Empty Widget 1" });
-            Widgets.create({ title: "Empty Widget 2" });
-            Widgets.create({ title: "Empty Widget 3" });
+            Widgets.fetch();
         },
 
         render: function () {
-            
+            //this.addAll();
+            //this.$el.html(this.template(this.model.attributes));
+            //return this;
         },
         
-        addOne: function (todo) {
-            var view = new WidgetView({ model: todo });
+        addOne: function (widget) {
+            var view = new WidgetView({ model: widget });
             this.$("#widgets").append(view.render().el);
         },
-
-        // Add all items in the **Todos** collection at once.
+        
         addAll: function () {
-            Todos.each(this.addOne, this);
+            Widgets.each(this.addOne, this);
         },
     });
     var App = new AppView();

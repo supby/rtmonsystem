@@ -1,12 +1,6 @@
-﻿@{
+﻿@*@model RTMonSystem.Web.Client.Models.HomeModel*@
+@{
     ViewBag.Title = "Home Page";
 }
-
-<div id="widgets" class="container">
-
-</div>
-<script type="text/template" id="widget-template">
-    <div class="view">
-        <label><%- title %></label>
-    </div>
-</script>
+@*@Html.Partial("WidgetList", Model.WidgetList)*@
+@Html.Partial("WidgetList")
