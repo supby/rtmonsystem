@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RTMonSystem.DataSources.REST
 {
-    public class RESTDataSource : IDataSource
+    public class RESTDataSource : IDataSource<string>
     {
         private readonly Uri _uri;
         public RESTDataSource(string url) : this(new Uri(url))

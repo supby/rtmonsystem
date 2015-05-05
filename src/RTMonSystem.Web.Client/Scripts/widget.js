@@ -7,7 +7,20 @@
             Description: "",
             Type: ""
         };
-    }
+    },
+
+    connect: function() {
+        var widgetHub = $.connection.widgetHub;
+        widgetHub.client.updateWidgetsData = $.proxy(this.updateWidgetData, this);
+        var _this = this;
+        $.connection.hub.start().done(function () {
+            widgetHub.server.connect(_this.get('Type'));
+        });
+    },
+
+    updateWidgetData: function (msg) {
+        this.trigger('updateWidgetData', [msg]);
+    },
 });
 
 var WidgetList = Backbone.Collection.extend({    
@@ -27,13 +40,18 @@ var WidgetView = Backbone.View.extend({
     template: _.template($('#widget-template').html()),
 
     initialize: function () {
-        var widgetHub = $.connection.widgetHub;
-        widgetHub.client.updateWidgetsData = $.proxy(this.updateWidgetData, this);
-        $.connection.hub.start();
+        this.listenTo(this.model, 'updateWidgetData', this.updateWidgetData);
+        this.model.connect();
     },
 
     updateWidgetData: function(msg){
-        console.log("update");
+        var modelType = this.model.get("Type");
+        if (modelType == 'YahooFinDataSource') {
+            this.$el.find('.rtm-widget-data').text(msg);
+        }
+        if (modelType == 'RandomNumberDataSource') {
+            this.$el.find('.rtm-widget-data').text(msg);
+        }
     },
 
     render: function () {

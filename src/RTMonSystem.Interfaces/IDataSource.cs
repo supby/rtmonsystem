@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace RTMonSystem.Interfaces
 {
-    public interface IDataSource
+    public interface IDataSource<T>
     {
-        Task<string> GetDataAsync();
+        Task<T> GetDataAsync();
     }
 }

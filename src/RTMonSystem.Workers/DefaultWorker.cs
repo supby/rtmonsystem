@@ -9,34 +9,20 @@ using System.Threading.Tasks;
 
 namespace RTMonSystem.Workers
 {
-    public class DefaultWorker : IDataSourceWorker
+    public class DefaultWorker<T> : IDataSourceWorker<T>
     {
-        private readonly IDataSource _ds;
+        private readonly IDataSource<T> _ds;
         private readonly int _delay = 0;
 
-        public DefaultWorker(IDataSource ds, int delay=0)
+        public DefaultWorker(IDataSource<T> ds, int delay=0)
         {
             _ds = ds;
             _delay = delay;
         }
 
-        public IObservable<string> Run(CancellationToken ct)
+        public IObservable<T> Run(CancellationToken ct)
         {
-            //Func<IObserver<string>, Task> s = async obs =>
-            //                {
-            //                    while (true)
-            //                    {
-            //                        string data = await _ds.GetDataAsync();
-            //                        if (!string.IsNullOrEmpty(data))
-            //                            Task.Run(() => obs.OnNext(data), ct);
-
-            //                        ct.ThrowIfCancellationRequested();
-            //                        if (_delay > 0)
-            //                            await Task.Delay(_delay, ct);
-            //                    }
-            //                };
-
-            Func<IObserver<string>, Task> s = obs =>
+            Func<IObserver<T>, Task> s = obs =>
             {
                 return Task.Run(() =>
                 {
@@ -45,9 +31,8 @@ namespace RTMonSystem.Workers
                         _ds.GetDataAsync()
                            .ContinueWith(t =>
                            {
-                               string data = t.Result;
-                               if (!string.IsNullOrEmpty(data))
-                                   obs.OnNext(data);
+                               T data = t.Result;
+                               obs.OnNext(data);
                            })
                             .Wait();
 
@@ -58,7 +43,7 @@ namespace RTMonSystem.Workers
                 });
             };
 
-            return Observable.Create<string>(s);
+            return Observable.Create<T>(s);
         }
     }
 }

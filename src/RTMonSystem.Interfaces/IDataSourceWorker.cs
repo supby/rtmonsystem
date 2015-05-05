@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace RTMonSystem.Interfaces
 {
-    public interface IDataSourceWorker
+    public interface IDataSourceWorker<T>
     {
-        IObservable<string> Run(CancellationToken ct);
+        IObservable<T> Run(CancellationToken ct);
     }
 }

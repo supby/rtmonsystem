@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace RTMonSystem.Workers.Test
 {
-    class TestDataSource: IDataSource
+    class TestDataSource: IDataSource<string>
     {
         public Task<string> GetDataAsync()
         {
@@ -40,7 +40,7 @@ namespace RTMonSystem.Workers.Test
         [TestMethod]
         public void DefaultWorker_Def()
         {
-            var target = new DefaultWorker(new TestDataSource());
+            var target = new DefaultWorker<string>(new TestDataSource());
 
             var ts = new CancellationTokenSource();
             target.Run(ts.Token).Subscribe(new TestObserver());
