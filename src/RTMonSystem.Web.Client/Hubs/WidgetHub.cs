@@ -21,37 +21,43 @@ namespace RTMonSystem.Web.Client.Hubs
             //Console.WriteLine(ex.Message);
         }
 
-        public void Connect(string widgetType)
+        public void ConnectRange(List<Widget> widgets)
+        {
+            foreach (Widget widget in widgets)
+                Connect(widget);
+        }
+
+        public void Connect(Widget widget)
         {
             CancellationTokenSource src = new CancellationTokenSource();
-            if (widgetType == typeof(YahooFinDataSource).Name)
+            if (widget.Type == typeof(YahooFinDataSource).Name)
             {
-                new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), 100)
+                new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), 1000)
                 .Run(src.Token)
                 .Subscribe(msg =>
                 {
-                    UpdateWidgetsData(JObject.Parse(msg));
+                    UpdateWidgetsData(widget, JObject.Parse(msg));
                 }, OnError);
             }
-            if (widgetType == typeof(RandomNumberDataSource).Name)
+            if (widget.Type == typeof(RandomNumberDataSource).Name)
             {
-                new DefaultWorker<int>(new RandomNumberDataSource(), 100)
+                new DefaultWorker<int>(new RandomNumberDataSource(), 1000)
                 .Run(src.Token)
                 .Subscribe(val =>
                 {
-                    UpdateWidgetsData(val);
+                    UpdateWidgetsData(widget, val);
                 }, OnError);
             }
         }
 
-        public void UpdateWidgetsData(JObject msg)
+        public void UpdateWidgetsData(Widget widget, JObject msg)
         {
-            Clients.Caller.updateWidgetsData(msg);
+            Clients.Caller.updateWidgetsData(widget.Id, msg);
         }
 
-        public void UpdateWidgetsData(int value)
+        public void UpdateWidgetsData(Widget widget, int value)
         {
-            Clients.Caller.updateWidgetsData(value);
+            Clients.Caller.updateWidgetsData(widget.Id, value);
         }
     }
 }

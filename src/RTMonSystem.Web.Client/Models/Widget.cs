@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace RTMonSystem.Web.Client.Models
 {
     public class Widget
     {
+        public Widget()
+        { }
         public Widget(string name, Type type, string title, string description)
         {
             Id = Guid.NewGuid();
@@ -16,10 +19,19 @@ namespace RTMonSystem.Web.Client.Models
             Title = title;
             Description = description;
         }
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public string Type { get; private set; }
+        [JsonProperty("Id")]
+        public Guid Id { get; set; }
+
+        [JsonProperty("Name")]
+        public string Name { get; set; }
+
+        [JsonProperty("Title")]
+        public string Title { get; set; }
+
+        [JsonProperty("Description")]
+        public string Description { get; set; }
+
+        [JsonProperty("Type")]
+        public string Type { get; set; }
     }
 }

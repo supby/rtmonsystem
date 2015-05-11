@@ -9,15 +9,6 @@
         };
     },
 
-    connect: function() {
-        var widgetHub = $.connection.widgetHub;
-        widgetHub.client.updateWidgetsData = $.proxy(this.updateWidgetData, this);
-        var _this = this;
-        $.connection.hub.start().done(function () {
-            widgetHub.server.connect(_this.get('Type'));
-        });
-    },
-
     updateWidgetData: function (msg) {
         this.trigger('updateWidgetData', [msg]);
     },
@@ -41,16 +32,14 @@ var WidgetView = Backbone.View.extend({
 
     initialize: function () {
         this.listenTo(this.model, 'updateWidgetData', this.updateWidgetData);
-        this.model.connect();
     },
 
-    updateWidgetData: function(msg){
-        var modelType = this.model.get("Type");
-        if (modelType == 'YahooFinDataSource') {
-            this.$el.find('.rtm-widget-data').text(msg);
+    updateWidgetData: function (msg) {
+        if (this.model.get('Type') == 'YahooFinDataSource') {
+            $('.rtm-widget-data', this.$el).text(msg[0].query.results.quote.Ask);
         }
-        if (modelType == 'RandomNumberDataSource') {
-            this.$el.find('.rtm-widget-data').text(msg);
+        if (this.model.get('Type') == 'RandomNumberDataSource') {
+            $('.rtm-widget-data', this.$el).text(msg);
         }
     },
 
