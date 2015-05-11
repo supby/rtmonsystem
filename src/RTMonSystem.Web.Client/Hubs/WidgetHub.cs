@@ -30,18 +30,18 @@ namespace RTMonSystem.Web.Client.Hubs
         public void Connect(Widget widget)
         {
             CancellationTokenSource src = new CancellationTokenSource();
-            if (widget.Type == typeof(YahooFinDataSource).Name)
+            if (widget.SourceType == typeof(YahooFinDataSource).Name)
             {
-                new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), 1000)
+                new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), widget.RefreshRate)
                 .Run(src.Token)
                 .Subscribe(msg =>
                 {
                     UpdateWidgetsData(widget, JObject.Parse(msg));
                 }, OnError);
             }
-            if (widget.Type == typeof(RandomNumberDataSource).Name)
+            if (widget.SourceType == typeof(RandomNumberDataSource).Name)
             {
-                new DefaultWorker<int>(new RandomNumberDataSource(), 1000)
+                new DefaultWorker<int>(new RandomNumberDataSource(), widget.RefreshRate)
                 .Run(src.Token)
                 .Subscribe(val =>
                 {

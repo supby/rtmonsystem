@@ -21,7 +21,8 @@ namespace RTMonSystem.Web.Client.Controllers
             var m = new HomeModel();
             m.WidgetList = new List<Widget>() 
             {
-                new Widget("Widget 1", typeof(YahooFinDataSource), "Yahoo Finance GOOG", "Yahoo Finance GOOG"),
+                new JSONWidget("Widget 1", typeof(YahooFinDataSource), "Yahoo Finance GOOG", "Yahoo Finance GOOG", 
+                                path: ""),
                 new Widget("Widget 2", typeof(RandomNumberDataSource), "Sample Random Generator", "Sample Random Generator"),
             };
             return Json(m, JsonRequestBehavior.AllowGet);

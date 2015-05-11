@@ -1,11 +1,14 @@
 ﻿var Widget = Backbone.Model.extend({
     defaults: function () {
         return {
-            Title: "",
-            Id: "",
-            Name: "",
-            Description: "",
-            Type: ""
+            Title: '',
+            Id: '',
+            Name: '',
+            Description: '',
+            Type: '',
+            SourceType: '',
+            ViewType: 'None',
+            RefreshRate: 1000
         };
     },
 
@@ -35,12 +38,7 @@ var WidgetView = Backbone.View.extend({
     },
 
     updateWidgetData: function (msg) {
-        if (this.model.get('Type') == 'YahooFinDataSource') {
-            $('.rtm-widget-data', this.$el).text(msg[0].query.results.quote.Ask);
-        }
-        if (this.model.get('Type') == 'RandomNumberDataSource') {
             $('.rtm-widget-data', this.$el).text(msg);
-        }
     },
 
     render: function () {

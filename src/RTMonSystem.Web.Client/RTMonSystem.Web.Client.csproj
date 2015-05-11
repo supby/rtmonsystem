@@ -149,6 +149,7 @@
     </Compile>
     <Compile Include="Hubs\WidgetHub.cs" />
     <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\JSONWidget.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -194,6 +195,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\extensions\Object.js" />
+    <Content Include="Scripts\widgets\JSONWidget.js" />
     <Content Include="Scripts\lib\backbone-min.js" />
     <Content Include="Scripts\lib\backbone.localStorage-min.js" />
     <Content Include="Scripts\lib\bootstrap.js" />
@@ -215,7 +218,7 @@
     <Content Include="Scripts\lib\respond.min.js" />
     <Content Include="Scripts\lib\underscore-min.js" />
     <Content Include="Scripts\lib\_references.js" />
-    <Content Include="Scripts\widget.js" />
+    <Content Include="Scripts\widgets\widget.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

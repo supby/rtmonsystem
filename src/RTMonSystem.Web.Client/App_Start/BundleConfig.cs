@@ -37,8 +37,10 @@ namespace RTMonSystem.Web.Client
                         "~/Scripts/lib/jquery.signalR-2.2.0.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                        "~/Scripts/extensions/Object.js",
                         "~/Scripts/app.js",
-                        "~/Scripts/widget.js"));
+                        "~/Scripts/widgets/widget.js",
+                        "~/Scripts/widgets/JSONWidget.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

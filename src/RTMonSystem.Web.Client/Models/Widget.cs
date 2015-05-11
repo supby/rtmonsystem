@@ -7,18 +7,25 @@ using System.Web;
 
 namespace RTMonSystem.Web.Client.Models
 {
+    public enum WidgetViewType
+    {
+        None, JSOMPath
+    }
+
     public class Widget
     {
-        public Widget()
-        { }
-        public Widget(string name, Type type, string title, string description)
+        public Widget(string name = default(string), Type sourceType = default(Type),
+                        string title = default(string), string description = default(string), int refreshRate=1000)
         {
             Id = Guid.NewGuid();
             Name = name;
-            Type = type.Name;
+            SourceType = sourceType.Name;
             Title = title;
             Description = description;
+            ViewType = WidgetViewType.None;
+            RefreshRate = refreshRate;
         }
+
         [JsonProperty("Id")]
         public Guid Id { get; set; }
 
@@ -31,7 +38,13 @@ namespace RTMonSystem.Web.Client.Models
         [JsonProperty("Description")]
         public string Description { get; set; }
 
-        [JsonProperty("Type")]
-        public string Type { get; set; }
+        [JsonProperty("SourceType")]
+        public string SourceType { get; set; }
+
+        [JsonProperty("ViewType")]
+        public WidgetViewType ViewType { get; protected set; }
+
+        [JsonProperty("RefreshRate")]
+        public int RefreshRate { get; set; }
     }
 }
