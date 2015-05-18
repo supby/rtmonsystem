@@ -6,8 +6,7 @@
 
         connect: function () {
             var widgetHub = $.connection.widgetHub;
-            widgetHub.client.updateWidgetsData = $.proxy(this.updateWidgetsData, this);
-            var _this = this;
+            widgetHub.client.updateWidgetsData = this.updateWidgetsData;
             $.connection.hub.start().done(function () {
                 widgetHub.server.connectRange(Widgets.toJSON());
             });
@@ -40,7 +39,10 @@
         },
         
         addOne: function (widget) {
-            var view = new WidgetView({ model: widget });
+            if(widget.get('ViewType') == 0)
+                var view = new WidgetView({ model: widget });
+            if (widget.get('ViewType') == 1)
+                var view = new JSONWidgetView({ model: widget });
             this.$("#widgets").append(view.render().el);
         },
         

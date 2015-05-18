@@ -14,12 +14,15 @@ namespace RTMonSystem.Web.Client.Models
 
     public class Widget
     {
+        public Widget(): this(default(string), default(Type), default(string), default(string), 1000)
+        {}
+
         public Widget(string name = default(string), Type sourceType = default(Type),
                         string title = default(string), string description = default(string), int refreshRate=1000)
         {
             Id = Guid.NewGuid();
             Name = name;
-            SourceType = sourceType.Name;
+            SourceType = sourceType == default(Type) ? string.Empty : sourceType.Name;
             Title = title;
             Description = description;
             ViewType = WidgetViewType.None;
@@ -42,7 +45,7 @@ namespace RTMonSystem.Web.Client.Models
         public string SourceType { get; set; }
 
         [JsonProperty("ViewType")]
-        public WidgetViewType ViewType { get; protected set; }
+        public WidgetViewType ViewType { get; set; }
 
         [JsonProperty("RefreshRate")]
         public int RefreshRate { get; set; }

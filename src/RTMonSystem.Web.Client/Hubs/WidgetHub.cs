@@ -16,6 +16,19 @@ namespace RTMonSystem.Web.Client.Hubs
 {
     public class WidgetHub : Hub
     {
+        private CancellationTokenSource _ctSrc;
+
+        public WidgetHub()
+        {
+            _ctSrc = new CancellationTokenSource();
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            _ctSrc.Cancel();
+            return base.OnDisconnected(stopCalled);
+        }
+
         private void OnError(Exception ex)
         {
             //Console.WriteLine(ex.Message);
@@ -29,11 +42,10 @@ namespace RTMonSystem.Web.Client.Hubs
 
         public void Connect(Widget widget)
         {
-            CancellationTokenSource src = new CancellationTokenSource();
             if (widget.SourceType == typeof(YahooFinDataSource).Name)
             {
                 new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), widget.RefreshRate)
-                .Run(src.Token)
+                .Run(_ctSrc.Token)
                 .Subscribe(msg =>
                 {
                     UpdateWidgetsData(widget, JObject.Parse(msg));
@@ -42,7 +54,7 @@ namespace RTMonSystem.Web.Client.Hubs
             if (widget.SourceType == typeof(RandomNumberDataSource).Name)
             {
                 new DefaultWorker<int>(new RandomNumberDataSource(), widget.RefreshRate)
-                .Run(src.Token)
+                .Run(_ctSrc.Token)
                 .Subscribe(val =>
                 {
                     UpdateWidgetsData(widget, val);

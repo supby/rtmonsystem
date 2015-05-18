@@ -7,7 +7,7 @@
 });
 
 var JSONWidgetView = WidgetView.extend({
-    template: _.template($('#json-widget-template').html()),
+    //template: _.template($('#json-widget-template').html()),
 
     updateWidgetData: function (msg) {
         $('.rtm-widget-data', this.$el).text(Object.byString(msg, this.model.get('Path')));

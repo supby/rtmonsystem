@@ -1,13 +1,12 @@
 ﻿var Widget = Backbone.Model.extend({
     defaults: function () {
         return {
-            Title: '',
             Id: '',
             Name: '',
+            Title: '',
             Description: '',
-            Type: '',
             SourceType: '',
-            ViewType: 'None',
+            ViewType: 0, // 0 - None, 1 - JSONPath
             RefreshRate: 1000
         };
     },
