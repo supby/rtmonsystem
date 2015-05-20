@@ -17,7 +17,7 @@ namespace RTMonSystem.Con
         {
             CancellationTokenSource src = new CancellationTokenSource();
             new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), 100)
-                .Run(src.Token)
+                .Run()
                 .Subscribe(msg =>
                 {
                     JObject obj = JObject.Parse(msg);

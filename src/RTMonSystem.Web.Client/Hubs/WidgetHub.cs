@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using RTMonSystem.DataSources;
 using RTMonSystem.DataSources.REST.Yahoo;
+using RTMonSystem.Interfaces;
 using RTMonSystem.Web.Client.Models;
 using RTMonSystem.Workers;
 using System;
@@ -16,7 +17,12 @@ namespace RTMonSystem.Web.Client.Hubs
 {
     public class WidgetHub : Hub
     {
-        private CancellationTokenSource _ctSrc;
+        private readonly IWorkersManager _workersManager;
+
+        public WidgetHub(IWorkersManager workersManager)
+        {
+            _workersManager = workersManager;
+        }
 
         public override Task OnDisconnected(bool stopCalled)
         {
@@ -31,7 +37,7 @@ namespace RTMonSystem.Web.Client.Hubs
 
         public void ConnectRange(List<Widget> widgets)
         {
-            _ctSrc = new CancellationTokenSource();
+            
             foreach (Widget widget in widgets)
                 Connect(widget);
         }
@@ -40,21 +46,23 @@ namespace RTMonSystem.Web.Client.Hubs
         {
             if (widget.SourceType == typeof(YahooFinDataSource).Name)
             {
-                new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), widget.RefreshRate)
-                .Run(_ctSrc.Token)
+                var w = new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), widget.RefreshRate);
+                w.Run()
                 .Subscribe(msg =>
                 {
                     UpdateWidgetsData(widget, JObject.Parse(msg));
                 }, OnError);
+                _workersManager.AttachWorker(Context.ConnectionId, w);
             }
             if (widget.SourceType == typeof(RandomNumberDataSource).Name)
             {
-                new DefaultWorker<int>(new RandomNumberDataSource(), widget.RefreshRate)
-                .Run(_ctSrc.Token)
+                var w = new DefaultWorker<int>(new RandomNumberDataSource(), widget.RefreshRate);
+                w.Run()
                 .Subscribe(val =>
                 {
                     UpdateWidgetsData(widget, val);
                 }, OnError);
+                _workersManager.AttachWorker(Context.ConnectionId, w);
             }
         }
 
@@ -68,18 +76,9 @@ namespace RTMonSystem.Web.Client.Hubs
             Clients.Caller.updateWidgetsData(widget.Id, value);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            //if (disposing)
-            //    StopWorkers();
-
-            base.Dispose(disposing);
-        }
-
         private void StopWorkers()
         {
-            if (_ctSrc != null)
-                _ctSrc.Cancel();
+            _workersManager.DetachWorkersById(Context.ConnectionId);
         }
     }
 }

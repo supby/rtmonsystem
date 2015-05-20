@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="IDataSource.cs" />
     <Compile Include="IDataSourceWorker.cs" />
+    <Compile Include="IWorkersManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

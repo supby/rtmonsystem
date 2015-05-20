@@ -42,12 +42,11 @@ namespace RTMonSystem.Workers.Test
         {
             var target = new DefaultWorker<string>(new TestDataSource());
 
-            var ts = new CancellationTokenSource();
-            target.Run(ts.Token).Subscribe(new TestObserver());
+            target.Run().Subscribe(new TestObserver());
 
             Task.Delay(3000).Wait();
 
-            ts.Cancel();
+            target.Stop();
         }
     }
 }

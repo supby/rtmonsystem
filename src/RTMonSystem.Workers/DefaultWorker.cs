@@ -9,18 +9,20 @@ using System.Threading.Tasks;
 
 namespace RTMonSystem.Workers
 {
-    public class DefaultWorker<T> : IDataSourceWorker<T>
+    public class DefaultWorker<T> : IDataSourceWorker<T>, IDisposable
     {
         private readonly IDataSource<T> _ds;
         private readonly int _delay = 0;
+        private readonly CancellationTokenSource _ctSrc;
 
         public DefaultWorker(IDataSource<T> ds, int delay=0)
         {
             _ds = ds;
             _delay = delay;
+            _ctSrc = new CancellationTokenSource();
         }
 
-        public IObservable<T> Run(CancellationToken ct)
+        public IObservable<T> Run()
         {
             Func<IObserver<T>, Task> s = obs =>
             {
@@ -38,13 +40,23 @@ namespace RTMonSystem.Workers
                         if (_delay > 0)
                             Task.Delay(_delay).Wait();
 
-                        if (ct.IsCancellationRequested)
+                        if (_ctSrc.Token.IsCancellationRequested)
                             break;
                     }
                 });
             };
 
             return Observable.Create<T>(s);
+        }
+
+        public void Stop()
+        {
+            _ctSrc.Cancel();
+        }
+
+        public void Dispose()
+        {
+            Stop();
         }
     }
 }

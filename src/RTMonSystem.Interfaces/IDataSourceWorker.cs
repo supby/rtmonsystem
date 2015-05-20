@@ -9,6 +9,7 @@ namespace RTMonSystem.Interfaces
 {
     public interface IDataSourceWorker<T>
     {
-        IObservable<T> Run(CancellationToken ct);
+        IObservable<T> Run();
+        void Stop();
     }
 }
