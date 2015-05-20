@@ -18,14 +18,9 @@ namespace RTMonSystem.Web.Client.Hubs
     {
         private CancellationTokenSource _ctSrc;
 
-        public WidgetHub()
-        {
-            _ctSrc = new CancellationTokenSource();
-        }
-
         public override Task OnDisconnected(bool stopCalled)
         {
-            _ctSrc.Cancel();
+            StopWorkers();
             return base.OnDisconnected(stopCalled);
         }
 
@@ -36,6 +31,7 @@ namespace RTMonSystem.Web.Client.Hubs
 
         public void ConnectRange(List<Widget> widgets)
         {
+            _ctSrc = new CancellationTokenSource();
             foreach (Widget widget in widgets)
                 Connect(widget);
         }
@@ -70,6 +66,20 @@ namespace RTMonSystem.Web.Client.Hubs
         public void UpdateWidgetsData(Widget widget, int value)
         {
             Clients.Caller.updateWidgetsData(widget.Id, value);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            //if (disposing)
+            //    StopWorkers();
+
+            base.Dispose(disposing);
+        }
+
+        private void StopWorkers()
+        {
+            if (_ctSrc != null)
+                _ctSrc.Cancel();
         }
     }
 }

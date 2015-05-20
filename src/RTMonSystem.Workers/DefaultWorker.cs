@@ -28,8 +28,6 @@ namespace RTMonSystem.Workers
                 {
                     while (true)
                     {
-                        if (ct.IsCancellationRequested)
-                            break;
                         _ds.GetDataAsync()
                            .ContinueWith(t =>
                            {
@@ -38,7 +36,10 @@ namespace RTMonSystem.Workers
                            })
                             .Wait();
                         if (_delay > 0)
-                            Task.Delay(_delay, ct).Wait();
+                            Task.Delay(_delay).Wait();
+
+                        if (ct.IsCancellationRequested)
+                            break;
                     }
                 });
             };
