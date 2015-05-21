@@ -37,7 +37,6 @@ namespace RTMonSystem.Web.Client.Hubs
 
         public void ConnectRange(List<Widget> widgets)
         {
-            
             foreach (Widget widget in widgets)
                 Connect(widget);
         }
