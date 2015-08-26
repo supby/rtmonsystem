@@ -43,6 +43,22 @@ namespace RTMonSystem.Web.Client.Hubs
 
         public void Connect(Widget widget)
         {
+            //var ds = GlobalHost.DependencyResolver.Resolve(Type.GetType(widget.SourceType)) as IDataSource<string>;
+            //var w = new DefaultWorker<string>(ds, widget.RefreshRate);
+            //w.Run()
+            // .Subscribe(msg =>
+            // {
+            //     UpdateWidgetsData(widget, JObject.Parse(msg));
+            // }, OnError);
+            //_workersManager.AttachWorker(Context.ConnectionId, w);
+
+            //string typeName = "MyTypeName";
+            //var type = container.Registrations.FirstOrDefault(r => r.RegisteredType.Name == typeName);
+            //if (type != null)
+            //{
+            //    var resolvedInstance = container.Resolve(type.RegisteredType);
+            //}
+
             if (widget.SourceType == typeof(YahooFinDataSource).Name)
             {
                 var w = new DefaultWorker<string>(new YahooFinDataSource(new List<string>() { "GOOG" }), widget.RefreshRate);
